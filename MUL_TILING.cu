@@ -4,14 +4,7 @@
 #include <math.h>
 #include <chrono>
 
-//Preguntas---------------------------------------------------
-//Preguntar sobre relación tiling e hilos (deben ser igual)
-//Es correcta mi implementación de las dos multiplicaciones de matrices
-//Epsilon salia con diferencia mas grande de .4 tiene sentido porque en el otro ejemplo solo era suma, aqui es multiplicación y se pierde mas el calculo
-//Para hacer el speedup debe ser con los mismos hilos? no?
-//Como poner las cosas en el readme
 
-//Borrar comentarios 
 using namespace std;
 #define N 1000
 #define TILE 16
@@ -109,7 +102,7 @@ __global__ void mulMatrixGPUTiles(float* A, float* B, float* C)
   unsigned int x = threadIdx.x;
   unsigned int y = threadIdx.y;
 
-  //Se friega porque intenta acceder a espacios de SharedA y SharedB que no existen porque son mas hilos de los que se deberian por eso da un error en la memoria, posible forma de arreglarlo es guardar the otra forma en los arreglos shared
+ 
   __shared__ float SharedA[TILE][TILE];
   __shared__ float SharedB[TILE][TILE];
 
@@ -132,7 +125,7 @@ __global__ void mulMatrixGPUTiles(float* A, float* B, float* C)
 
       __syncthreads();
 
-      for (int b = 0; b < TILE; ++b)
+      for (int b = 0; b < TILE; b++)
           sum += SharedA[y][b] * SharedB[b][x];
       
       __syncthreads();

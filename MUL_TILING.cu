@@ -106,14 +106,20 @@ __global__ void mulMatrixGPUTiles(float* A, float* B, float* C)
   __shared__ float SharedA[TILE][TILE];
   __shared__ float SharedB[TILE][TILE];
 
-  for(int a = 0; a < TILE;a++)// Se inician en 0 los arreglos
+
+  SharedA[y][x] = 0.0;
+  SharedB[y][x] = 0.0;
+
+  __syncthreads();
+
+  /*for(int a = 0; a < TILE;a++)// Se inician en 0 los arreglos
   {
     for(int b = 0; b < TILE; b++)
     {
       SharedA[a][b] = 0.0;
       SharedB[a][b] = 0.0;
     }
-  }
+  }*/
 
   for (int a = (TILE + N - 1)/TILE; a >=0; a--) //Recorrer todas las tiles se hace Ceil para asegurar de tener todos los datos, se recorre de forma invertida para conservar los 0s.
     {

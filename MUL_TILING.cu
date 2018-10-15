@@ -6,7 +6,7 @@
 
 
 using namespace std;
-#define N 1000
+#define N 2000
 #define TILE 16
 #define TX 16
 #define TY 16
@@ -95,14 +95,14 @@ __global__ void mulMatrixGPU2D(float *MatA, float *MatB, float *MatC)
 __global__ void mulMatrixGPUTiles(float* A, float* B, float* C)
 {
   float sum = 0;
-  
+
   unsigned int ix = threadIdx.x + TILE * blockIdx.x;
   unsigned int iy = threadIdx.y + TILE * blockIdx.y;
 
   unsigned int x = threadIdx.x;
   unsigned int y = threadIdx.y;
 
- 
+
   __shared__ float SharedA[TILE][TILE];
   __shared__ float SharedB[TILE][TILE];
 
@@ -114,7 +114,7 @@ __global__ void mulMatrixGPUTiles(float* A, float* B, float* C)
       SharedB[a][b] = 0.0;
     }
   }
-  
+
   for (int a = (TILE + N - 1)/TILE; a >=0; a--) //Recorrer todas las tiles se hace Ceil para asegurar de tener todos los datos, se recorre de forma invertida para conservar los 0s.
     {
       if (a*TILE + x < N && iy < N) //Para que no intente acceder a espacios que no existen de la matriz A
@@ -127,10 +127,10 @@ __global__ void mulMatrixGPUTiles(float* A, float* B, float* C)
 
       for (int b = 0; b < TILE; b++)
           sum += SharedA[y][b] * SharedB[b][x];
-      
+
       __syncthreads();
     }
-    
+
     if (ix < N && iy < N)
     {
       C[iy*N+ix] = sum;
@@ -234,7 +234,7 @@ int main(int argc, char **argv)
     if(checkResult(hostRef, gpuRefTiles))
       printf("They are equal\n\n");
     else
-      printf("They are different\n\n");  
+      printf("They are different\n\n");
 
 
 

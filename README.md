@@ -18,3 +18,34 @@ Rubric:
 3. GPU code is initialized correctly, and the device memory is deallocated.
 4. Implement matrix multiplication using shared memory and tiling.
 5. Report the average processing time and speedup for the different tile sizes.
+
+Results
+8*8
+
+Average timing:
+1. CPU = 57029.5326 ms
+2. GPU = 442.508232 ms
+3. GPU tiling = 115.1819 ms
+
+Speed up:
+GPU - GPU TILING = 3.8418209
+
+16*16
+
+Average timing:
+1. CPU = 57026.0131 ms
+2. GPU = 778.107736 ms
+3. GPU tiling = 67.4595319 ms
+
+Speed up:
+GPU - GPU TILING = 11.5344372
+
+32*32
+
+Average timing:
+1. CPU = 56852.5791 ms
+2. GPU = 1460.18385 ms
+3. GPU tiling = 94.0656622 ms
+
+Speed up:
+GPU - GPU TILING = 15.5230274

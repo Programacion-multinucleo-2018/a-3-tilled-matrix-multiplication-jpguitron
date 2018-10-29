@@ -19,6 +19,8 @@ Rubric:
 4. Implement matrix multiplication using shared memory and tiling.
 5. Report the average processing time and speedup for the different tile sizes.
 
+**Grade: 100**
+
 ## Results
 
 8*8
